@@ -1,7 +1,7 @@
 apply plugin: 'org.ajoberstar.github-pages'
 
 githubPages {
-    repoUri = "git@github.com:ljacomet/${rootProject.name}.git"
+    repoUri = "git@github.com:melix/${rootProject.name}.git"
     pages {
         from file("$buildDir/asciidoc/revealjs")
     }
