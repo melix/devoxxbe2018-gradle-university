@@ -1,0 +1,367 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><title>: Je passe à Gradle Maturité, performance et plaisir!</title><meta content="yes" name="apple-mobile-web-app-capable" /><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style" /><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport" /><link href="reveal.js/css/reveal.css" rel="stylesheet" /><link rel="stylesheet" href="reveal.js/css/theme/gradle.css" id="theme" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" /><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet" /><script>var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+document.getElementsByTagName( 'head' )[0].appendChild( link );</script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]--><!--<link rel="stylesheet" type="text/css" href="reveal.js/css/theme/github-gist.css" />--></head><body><div class="reveal"><div class="slides"><section class="title" data-state="title" data-transition="zoom" data-transition-speed="fast" data-background-image="./images/title.jpeg"><h1></h1><h2>Je passe à Gradle Maturité, performance et plaisir!</h2><div class="preamble"><div class="paragraph"><p>Cédric Champeau (@CedricChampeau) &amp; Louis Jacomet (@ljacomet), Gradle Inc.</p></div></div></section>
+<section><section id="who-are-we"><h2>Who are we?</h2></section><section id="cedric"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">speaker {
+    name 'Cédric Champeau'
+    company 'Gradle Inc'
+    oss 'Apache Groovy committer',
+    successes 'Static type checker',
+              'Static compilation',
+              'Traits',
+              'Markup template engine',
+              'DSLs'
+        failures Stream.of(bugs),
+        twitter '@CedricChampeau',
+        github 'melix',
+        extraDescription '''Groovy in Action 2 co-author
+Misc OSS contribs'''
+}</code></pre></div></div></section><section id="louis"><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">speaker {
+    name 'Louis Jacomet'
+    company 'Gradle Inc'
+    past 'Terracotta / Ehcache',
+              'Freelance consultant',
+        failures Stream.of(bugs),
+        twitter '@ljacomet',
+        github 'ljacomet',
+        extraDescription '''Not fully figured out
+how to stay out of management?!?'''
+}</code></pre></div></div></section></section>
+<section><section id="what-is-gradle"><h2>What is Gradle?</h2></section><section id="gradle-s-purpose"><h2>Gradle&#8217;s purpose</h2><div class="paragraph"><p>Gradle is a build and automation tool.</p></div>
+<div class="ulist"><ul><li class="fragment"><p>JVM based</p></li><li class="fragment"><p>Implemented in Java</p></li><li class="fragment"><p>100% Free Open Source - Apache Standard License 2.0</p></li></ul></div></section><section id="agnostic-build-system"><h2>Agnostic Build System</h2><div class="ulist"><ul><li><p>Java ecosystem</p><div class="ulist"><ul><li><p>Groovy, Kotlin, Scala, &#8230;&#8203;</p></li></ul></div></li><li><p>Native ecosystem</p><div class="ulist"><ul><li><p>C, C++, Swift, &#8230;&#8203;</p></li></ul></div></li><li><p>Android</p></li><li><p>Misc</p><div class="ulist"><ul><li><p>Go, Asciidoctor, &#8230;&#8203;</p></li></ul></div></li></ul></div></section><section id="gradle-in-figures"><h2>Gradle in figures</h2><div class="ulist"><ul><li class="fragment"><p>5.0M downloads / month</p></li><li class="fragment"><p><a href="https://techcrunch.com/2017/04/07/tracking-the-explosive-growth-of-open-source-software/">#17 OSS projects worldwide</a></p></li><li class="fragment"><p>35 Gradle Engineers</p></li><li class="fragment"><p>300K builds/week @LinkedIn</p></li></ul></div></section><section id="gradle-inc"><h2>Gradle Inc.</h2><div class="paragraph"><p>The company behind Gradle.</p></div>
+<div class="ulist"><ul><li><p>Build Happiness</p></li><li><p>Employs full time engineers</p></li><li><p>Providing Gradle Build Scans and Gradle Enterprise</p></li><li><p>Gradle consulting, support, development services etc.</p></li><li><p>Training: online, public and in-house</p></li></ul></div></section></section>
+<section><section id="objectives"><h2>Objectives</h2></section><section id="objectives-2"><h2>Objectives</h2><div class="paragraph"><p>Get you started with Gradle</p></div>
+<div class="ulist"><ul><li class="fragment"><p>As a user needing to interact with a Gradle project</p></li><li class="fragment"><p>As a build author starting to use Gradle for your projects</p></li></ul></div></section></section>
+<section id="agenda"><h2>Agenda</h2><div class="ulist"><ul><li><p>Anatomy of a Gradle project</p></li><li><p>Use Gradle</p></li><li><p>Concepts and plugins</p></li><li><p>Incremental build and tasks</p></li><li><p>Advanced configuration</p></li><li><p>Dependency Management</p></li><li><p>IDE integration</p></li><li><p>Caching</p></li></ul></div></section>
+<section id="gradle-survival-guide" data-background-image="./images/survival.jpeg" data-background-size="contain"><h2>Gradle survival guide</h2>
+<div class="paragraph"><p>*</p></div></section>
+<section><section id="anatomy-of-a-gradle-project"><h2>Anatomy of a Gradle project</h2><div class="paragraph"><p>Gradle is based on a set of conventions.</p></div><div class="paragraph"><p>Some inherited from the history of Java build systems:</p></div><div class="ulist"><ul><li><p><code>src/main/java</code></p></li><li><p><code>src/test/resources</code></p></li></ul></div><div class="paragraph"><p>Others brought by Gradle:</p></div><div class="ulist"><ul><li><p>The name of the project is the name of the containing folder</p></li></ul></div></section><section id="a-simple-project"><h2>A simple project</h2><div class="imageblock" style=""><img src="./images/simpleProject.png" alt="simpleProject" width="1280" height="720" /></div></section><section id="a-multi-project-build"><h2>A multi project build</h2><div class="imageblock" style=""><img src="./images/multiProject.png" alt="multiProject" width="1280" height="720" /></div></section><section id="demo-1-1" data-state="demo"><div class="paragraph"><p>Demo</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Browse build files</p></li><li><p>Show specific project build files</p></li><li><p>Show buildSrc dir</p></li></ul></div></aside></section><section id="the-build-file"><h2>The build file</h2><div class="ulist"><ul><li><p>By default, named <code>build.gradle</code> which can be configured.</p></li><li><p>Describes what the build is about through configuration.</p></li></ul></div></section><section id="companion-files"><h2>Companion files</h2><div class="ulist"><ul><li><p><code>settings.gradle</code>: Configure the project(s) that compose the build</p></li><li><p><code>gradle.properties</code>: Defines properties specific to the build, which can be overridden</p></li></ul></div></section><section id="additional-build-artifacts"><h2>Additional build artifacts</h2><div class="paragraph"><p>Directories:</p></div>
+<div class="ulist"><ul><li><p><code>buildSrc</code></p></li><li><p><code>.gradle</code></p></li><li><p><code>build</code></p></li></ul></div></section><section id="the-gradle-wrapper"><h2>The Gradle Wrapper</h2><div class="ulist"><ul><li class="fragment"><p>Bootstraps Gradle for project contributors</p></li><li class="fragment"><p>Project controls Gradle version</p></li></ul></div></section></section>
+<section><section id="build-scans"><h2>Build scans</h2></section><section id="what-is-a-build-scan"><h2>What is a build scan?</h2><div class="ulist"><ul><li><p>It is a permanent, centralized and shareable record of a build</p></li><li><p>It offers <em>tons</em> of insights into how your software is building</p></li></ul></div>
+<div class="imageblock" style=""><a class="image" href="https://scans.gradle.com/s/hh4n2hv5sd6n2"><img src="./images/scan.png" alt="scan" width="1280" height="720" /></a></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Show basic build scan features based on presentation build</p></li><li><p>TODO Flesh out this description</p></li></ul></div></aside></section><section id="how-to-enable-build-scans"><h2>How to enable build scans?</h2><div class="ulist"><ul><li><p>Simply add <code>--scan</code> to your build command</p><div class="ulist"><ul><li><p>Will prompt you to accept terms of service</p></li></ul></div></li><li><p>Or configure your build for it:</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">plugins {
+    id 'com.gradle.build-scan' version '1.13.1'
+}
+
+buildScan {
+    licenseAgreementUrl = 'https://gradle.com/terms-of-service'
+    licenseAgree = 'yes'
+}</code></pre></div></div></section></section>
+<section><section id="using-gradle"><h2>Using Gradle</h2></section><section id="invoking-gradle-using-the-wrapper"><h2>Invoking Gradle using the wrapper</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew hello</code></pre></div></div>
+<div class="paragraph"><p>Note the implicit invocation from the project root.
+With Gradle, no need to navigate inside project directories.
+Instead, you can pass a specific task name and path to execute.</p></div></section><section id="invoking-tasks"><h2>Invoking tasks</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew [taskName...] [--option-name...]</code></pre></div></div>
+<div class="paragraph"><p>Where <code>taskName</code> is one or more tasks names, space separated.</p></div>
+<div class="paragraph"><p>Each task can also reference a specific task in a subproject:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew :server:test</code></pre></div></div></section><section id="discovering-tasks"><h2>Discovering tasks</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew tasks</code></pre></div></div>
+<div class="paragraph"><p>Will list all the tasks defined by the project, with a description</p></div></section><section id="getting-help-on-a-task"><h2>Getting help on a task</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew help --task &lt;taskName&gt;</code></pre></div></div>
+<div class="paragraph"><p>Will list all projects having the task and give some usage context.</p></div></section><section id="exclude-a-task"><h2>Exclude a task</h2><div class="ulist"><ul><li><p><code>--exclude-task</code> or <code>-x</code></p><div class="ulist"><ul><li><p>To exclude one task from the execution graph</p></li></ul></div></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew build -x test</code></pre></div></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">This will exclude the specific task <em>and</em> all tasks it depended upon</td></tr></table></div></section><section id="continue-a-build"><h2>Continue a build</h2><div class="ulist"><ul><li><p><code>--continue</code></p><div class="ulist"><ul><li><p>To continue with the build even when a task fails</p></li></ul></div></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew test --continue</code></pre></div></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">The dependents task(s) of the failed one will still not be executed.</td></tr></table></div></section><section id="continuous-build"><h2>Continuous build</h2><div class="ulist"><ul><li><p><code>--continuous</code> or <code>-t</code></p><div class="ulist"><ul><li><p>Runs the tasks every time the input changes</p></li></ul></div></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew -t test</code></pre></div></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">Use <code>&lt;CTRL&gt;-D</code> to stop the build</td></tr></table></div></section><section id="logging"><h2>Logging</h2><div class="ulist"><ul><li class="fragment"><p>Gradle defines 6 log levels: <code>error</code>, <code>quiet</code>, <code>warning</code>, <code>lifecycle</code>, <code>info</code>, <code>debug</code></p></li><li class="fragment"><p>Default log level (<code>lifecycle</code>) is minimalistic</p></li></ul></div></section><section id="configuring-logging"><h2>Configuring logging</h2><div class="ulist"><ul><li><p>Command line flags allow to set a different level:</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">$ gradle hello -i
+$ gradle -q hello</code></pre></div></div>
+<div class="admonitionblock note"><table><tr><td class="icon"><i class="fa fa-info-circle" title="Note"></i></td><td class="content">When troubleshooting, <code>info</code> is usually enough, <code>debug</code> has a <em>lot</em> of output.</td></tr></table></div></section><section id="convention-tasks"><h2>Convention tasks</h2><div class="paragraph"><p>Gradle built-in plugins define a set of convention tasks.</p></div>
+<div class="paragraph"><p>These are used as as entry points to request execution of canonical project operations.</p></div></section><section id="code-assemble-code-task"><h2><code>assemble</code> task</h2><div class="paragraph"><p>This convention task indicates that all output producing tasks have to be executed.</p></div></section><section id="code-check-code-task"><h2><code>check</code> task</h2><div class="paragraph"><p>This convention task indicates that all verification tasks are to be executed.</p></div></section><section id="code-build-code-task"><h2><code>build</code> task</h2><div class="paragraph"><p>This convention task triggers <code>assemble</code> and <code>check</code>.</p></div></section><section id="no-task-argument"><h2>No task argument?</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew</code></pre></div></div>
+<div class="paragraph"><p>The above will invoke the <code>help</code> task by default.</p></div>
+<div class="paragraph"><p>However a project can define a set of default tasks to be run when it is invoked without a task argument.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">defaultTasks 'assemble', 'test'</code></pre></div></div></section><section id="gradle-daemon"><h2>Gradle daemon</h2><div class="paragraph"><p>By default, Gradle will start a background process to execute your builds.</p></div>
+<div class="paragraph"><p>This allows to have a warmed up JVM running your build instead of having a fresh one each time.</p></div>
+<div class="ulist"><ul><li class="fragment"><p><code>org.gradle.daemon</code> can be used to disable the daemon</p></li><li class="fragment"><p><code>org.gradle.daemon.idletimeout</code> can be used to tweak the idle time</p></li></ul></div></section><section id="parallel-builds"><h2>Parallel builds</h2><div class="paragraph"><p>Gradle can run tasks of decoupled projects in parallel</p></div>
+<div class="ulist"><ul><li class="fragment"><p><code>org.gradle.parallel</code> can be used to disable parallel mode</p></li><li class="fragment"><p><code>org.gradle.workers.max</code> can be used to limit the number of workers used by parallel builds</p><div class="ulist"><ul><li><p>Defaults to number of CPUs</p></li></ul></div></li></ul></div></section><section id="demo-2-1" data-state="demo"><div class="paragraph"><p>Demo</p></div>
+<aside class="notes"><div class="paragraph"><p>Cover:</p></div>
+<div class="ulist"><ul><li><p>Invocation camel case</p></li><li><p>One or more tasks</p></li><li><p>Think result instead of lifecycle</p></li></ul></div></aside></section></section>
+<section id="gradle-construction-guide"><h2>Gradle construction guide</h2><div class="imageblock stretch" style=""><img src="./images/construction.png" alt="construction" width="1280" height="720" /></div></section>
+<section><section id="concepts"><h2>Concepts</h2></section><section id="gradle-lifecycle"><h2>Gradle lifecycle</h2><div class="paragraph"><p>Configuration phase</p></div>
+<div class="ulist"><ul><li class="fragment"><p>Discovering projects</p></li><li class="fragment"><p>Build scripts evaluation</p></li><li class="fragment"><p>Model construction</p></li><li class="fragment"><p>Task graph construction</p></li></ul></div></section><section id="gradle-lifecycle-2"><h2>Gradle lifecycle (2)</h2><div class="paragraph"><p>Execution phase</p></div>
+<div class="ulist"><ul><li class="fragment"><p>Run tasks that are required by the build invocation</p></li></ul></div></section><section id="demo-3-1" data-state="demo"><div class="paragraph"><p>Demo</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Create a simple build.gradle</p></li><li><p>Add two inline tasks that doing a println</p></li><li><p>Execute one task</p><div class="ulist"><ul><li><p>Both println appear</p></li></ul></div></li><li><p>Move println to doLast</p></li><li><p>Execute one task</p><div class="ulist"><ul><li><p>Single println appear</p></li></ul></div></li></ul></div></aside></section><section id="lifecycle-best-practices"><h2>Lifecycle best practices</h2><div class="ulist"><ul><li><p>Do the minimum during configuration</p><div class="ulist"><ul><li><p>At this stage, Gradle walks all configuration items to determine which need to be part of the execution</p></li></ul></div></li></ul></div></section><section id="concepts-by-example"><h2>Concepts by example</h2><div class="paragraph"><p>What are the building blocks of a <em>compile</em> task for a Java project?</p></div></section><section id="tasks"><h2>Tasks</h2><div class="paragraph"><p>It is the target of a build execution and does the work.</p></div></section><section id="task-actions"><h2>Task actions</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">task hello {
+    doLast { print "Let's have a great week!" }
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p><code>doLast</code> adding actions to a task</p></li></ul></div></section><section id="task-type"><h2>Task type</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">task compileMe(type: JavaCompile) {
+    destinationDir "$buildDir/myDir"
+
+    //enable compilation in a separate daemon process
+    options.fork = true
+
+    //enable incremental compilation
+    options.incremental = true
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>Provides declarative configuration</p></li><li><p>Task action is defined by the task type</p></li><li><p>Models what the build is about in terms of execution</p></li></ul></div></section><section id="what-does-em-compile-em-do-then"><h2>What does <em>compile</em> do then?</h2><div class="paragraph"><p>Transform Java source files into class files.</p></div></section><section id="task-inputs"><h2>Task inputs</h2><div class="ulist"><ul><li class="fragment"><p>Java source files</p></li><li class="fragment"><p>Source encoding</p></li><li class="fragment"><p>Compile options</p></li><li class="fragment"><p>Classpath</p></li></ul></div></section><section id="task-outputs"><h2>Task outputs</h2><div class="ulist"><ul><li class="fragment"><p>Class files</p></li></ul></div></section><section id="importance-of-inputs-outputs"><h2>Importance of inputs / outputs</h2><div class="paragraph"><p>You can think of a Gradle task as a function.</p></div>
+<div class="paragraph"><p>Based on a set of inputs, you produce outputs.</p></div>
+<div class="paragraph"><p>And ideally, the same set of inputs results in the same outputs.</p></div></section><section id="inputs-origin"><h2>Inputs origin</h2><div class="ulist"><ul><li class="fragment"><p>Java source files</p><div class="ulist"><ul><li><p><code>SourceSet</code> concept</p></li></ul></div></li><li class="fragment"><p>Source encoding &amp; compile options</p><div class="ulist"><ul><li><p>Task configuration</p></li></ul></div></li><li class="fragment"><p>Classpath</p><div class="ulist"><ul><li><p>From associated configuration</p></li></ul></div></li></ul></div></section><section id="configurations"><h2>Configurations</h2><div class="paragraph"><p>A configuration is a container of dependencies and produced artifacts.</p></div>
+<div class="paragraph"><p>A configuration can extend another one, inheriting its dependencies.</p></div></section><section id="dependencies"><h2>Dependencies</h2><div class="paragraph"><p>A dependency is a pointer to another piece of software required to build, test or run your project.</p></div>
+<div class="paragraph"><p>When declaring a dependency, you tie it to a <code>Configuration</code>.</p></div></section><section id="in-practice"><h2>In practice</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">configurations {
+    implementation
+}
+
+dependencies {
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation project(':common')
+}</code></pre></div></div></section><section id="constructing-the-classpath"><h2>Constructing the classpath</h2><div class="ulist"><ul><li class="fragment"><p>Resolve the configuration</p><div class="ulist"><ul><li><p>Resolve the graph of dependencies</p></li><li><p>Retrieve or build the dependencies</p></li></ul></div></li><li class="fragment"><p>Build the classpath</p></li></ul></div></section><section id="invocation-chain"><h2>Invocation chain</h2><div class="ulist"><ul><li class="fragment"><p>User requests <code>compileJava</code></p></li><li class="fragment"><p>&#8594; Build needs the compileClasspath</p></li><li class="fragment"><p>&#8594; Build needs to resolve the <code>implementation</code> configuration</p></li></ul></div></section><section id="building-the-task-graph"><h2>Building the task graph</h2><div class="paragraph"><p>Gradle will arrange tasks in an execution graph during the configuration phase:</p></div>
+<div class="ulist"><ul><li class="fragment"><p>Each task to be executed is a node</p></li><li class="fragment"><p>Implicit and explicit relationships define the edges between nodes</p></li><li class="fragment"><p>No cycles are allowed</p></li></ul></div></section></section>
+<section><section id="base-plugins"><h2>Base plugins</h2></section><section id="plugin-code-base-code"><h2>Plugin <code>base</code></h2><div class="ulist"><ul><li><p>Adds tasks</p></li><li><p>Adds conventions</p></li><li><p>Provides some build structure</p></li></ul></div></section><section id="base-configurations"><h2>Base configurations</h2><div class="ulist"><ul><li><p><code>archives</code></p><div class="ulist"><ul><li><p>A configuration that contains the production artifacts of a project</p></li><li><p>Has a matching <code>uploadArchives</code> task for uploading the artifacts of <code>archives</code></p></li></ul></div></li></ul></div></section><section id="base-conventions"><h2>Base conventions</h2><div class="paragraph"><p>Properties and defaults at project level:</p></div>
+<div class="ulist"><ul><li class="fragment"><p><code>archivesBaseName</code> that defaults to <code>project.name</code></p></li><li class="fragment"><p><code>distsDirName</code> that defaults to <code>distributions</code></p></li><li class="fragment"><p><code>libsDirName</code> that defaults to <code>libs</code></p></li></ul></div></section><section id="base-conventions-2"><h2>Base conventions (2)</h2><div class="paragraph"><p>Default values for archive tasks:</p></div>
+<div class="ulist"><ul><li class="fragment"><p><code>destinationDir</code> with defaults depending on the type of archive produced</p></li><li class="fragment"><p><code>version</code> that default to <code>project.version</code></p></li><li class="fragment"><p><code>baseName</code> that defaults to <code>archiveBaseName</code></p></li></ul></div></section><section id="java-plugins-code-java-base-code"><h2>Java Plugins: <code>java-base</code></h2><div class="ulist"><ul><li class="fragment"><p>Adds model elements</p></li><li class="fragment"><p>Defines additional tasks</p></li><li class="fragment"><p>Extends the DSL with declarative elements, such as <code>SourceSet</code></p></li></ul></div></section><section id="sourceset"><h2>SourceSet</h2><div class="paragraph"><p>Models a source code logical unit:</p></div>
+<div class="ulist"><ul><li class="fragment"><p>Input source files (Java, Groovy, Scala, &#8230;&#8203;)</p></li><li class="fragment"><p>Input resource files (<code>*.properties</code>, <code>*.xml</code>, &#8230;&#8203;)</p></li><li class="fragment"><p>Output class files</p></li><li class="fragment"><p>Compilation and runtime classpaths</p></li><li class="fragment"><p>Tasks for processing inputs to outputs</p></li></ul></div></section><section id="java-plugins-code-java-code"><h2>Java Plugins: <code>java</code></h2><div class="ulist"><ul><li class="fragment"><p>Adds task instances</p></li><li class="fragment"><p>Defines a set of <em>conventions</em></p><div class="ulist"><ul><li><p>Defines default values for added tasks</p></li><li><p>Defines <code>main</code> and <code>test</code> source sets</p></li></ul></div></li><li class="fragment"><p>Adds <em>configurations</em></p></li></ul></div></section><section id="sourceset-conventions"><h2>SourceSet conventions</h2><div class="ulist"><ul><li class="fragment"><p>Source: <code>src/&lt;name&gt;/&lt;lang&gt;</code></p></li><li class="fragment"><p>Resources: <code>src/&lt;name&gt;/resources</code></p></li><li class="fragment"><p>Compilation tasks: <code>compile&lt;Name&gt;&lt;Lang&gt;</code></p></li><li class="fragment"><p>Dependency configurations:</p><div class="ulist"><ul><li><p>Compilation: <code>&lt;name&gt;Implementation</code></p></li><li><p>Runtime: <code>&lt;name&gt;Runtime</code></p></li></ul></div></li></ul></div></section><section id="naming-conventions-for-code-main-code"><h2>Naming conventions for <code>main</code></h2><div class="paragraph"><p>The <code>main</code> part is ignored, having the resulting name respect camel case.</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">configurations {
+    implementation
+    runtime
+}
+
+compileJava</code></pre></div></div></section><section id="java-plugins-code-java-library-code"><h2>Java Plugins: <code>java-library</code></h2><div class="ulist"><ul><li class="fragment"><p>Adds extra <em>configurations</em></p></li><li class="fragment"><p>Express the difference in your dependencies:</p><div class="ulist"><ul><li><p>The ones part of your API</p></li><li><p>The ones required at runtime by your implementation</p></li></ul></div></li></ul></div></section><section id="code-java-library-code-configurations"><h2><code>java-library</code> configurations</h2><div class="imageblock stretch" style=""><img src="./images/javaLibPluginConfigurations.png" alt="javaLibPluginConfigurations" width="1000" height="261" /></div></section><section id="demo-3-2" data-state="demo"><div class="paragraph"><p>Demo</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Demo creation of integration test sourceSet</p></li></ul></div></aside></section><section id="plugin-portal"><h2>Plugin portal</h2><div class="imageblock" style=""><a class="image" href="https://plugins.gradle.org"><img src="./images/plugin_portal.png" alt="plugin portal" width="1280" height="720" /></a></div></section></section>
+<section><section id="up-to-date-and-incremental-tasks"><h2>Up to date and incremental tasks</h2></section><section id="why-does-it-matter"><h2>Why does it matter?</h2><div class="ulist"><ul><li><p>Gradle is meant for incremental builds</p></li><li><p><code>clean</code> is a waste of time</p></li><li><p>Time is $$$</p></li></ul></div></section><section id="the-incrementality-test"><h2>The incrementality test</h2><div class="ulist"><ul><li class="fragment"><p>Run a build</p></li><li class="fragment"><p>Run again with no change</p></li><li class="fragment"><p>If a task was re-executed, you got it wrong</p></li></ul></div></section><section id="incremental-build"><h2>Incremental build</h2><div class="paragraph"><p>A task is UP-TO-DATE iff:</p></div>
+<div class="ulist"><ul><li><p>Inputs have not changed</p></li><li><p>Outputs are still present and un-tampered</p></li></ul></div></section><section id="change-detection"><h2>Change detection</h2><div class="ulist"><ul><li><p>Hash of input / output files</p></li><li><p>Hash of contents of input / output folders</p></li><li><p>Serialize input properties</p></li></ul></div></section><section id="control-change-detection"><h2>Control change detection</h2><div class="ulist"><ul><li><p><code>--rerun-tasks</code> bypasses up-to-date checks</p></li><li><p>Running at <em>info</em> level will give you insights in up-to-date calculations</p></li></ul></div></section><section id="example-building-a-shaded-jar"><h2>Example: building a shaded jar</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">task shadedJar(type: ShadedJar) {
+   jarFile = file("$buildDir/libs/shaded.jar")
+   classpath = configurations.runtime
+   mapping = ['org.apache': 'shaded.org.apache']
+}</code></pre></div></div>
+<div class="ulist"><ul><li><p>What are the task inputs?</p></li><li><p>What are the task outputs?</p></li><li><p>What if one of them changes?</p></li></ul></div></section><section id="declaring-inputs"><h2>Declaring inputs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="java language-java">public class ShadedJar extends DefaultTask {
+   ...
+   @InputFiles
+   FileCollection getClasspath() { ... }
+
+   @Input
+   Map&lt;String, String&gt; getMapping() { ... }
+}</code></pre></div></div></section><section id="declaring-outputs"><h2>Declaring outputs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="java language-java">public class ShadedJar extends DefaultTask {
+   ...
+
+   @OutputFile
+   File getJarFile() { ... }
+}</code></pre></div></div></section><section id="annotation-sensitivity"><h2>Annotation sensitivity</h2><div class="ulist"><ul><li><p><code>@InputFiles</code>: File path or contents</p></li><li><p><code>@Classpath</code>: File contents only, order sensitive</p></li><li><p><code>@CompileClasspath</code>: <strong>Class</strong> file contents, limited to ABI</p></li><li><p><code>@Input</code>: Value change</p></li></ul></div></section><section id="know-why-your-task-is-out-of-date"><h2>Know why your task is out-of-date</h2></section><section id="demo-4-1" data-state="demo"><div class="paragraph"><p>Demo</p></div></section><section id="incremental-task-inputs"><h2>Incremental task inputs</h2><div class="ulist"><ul><li><p>Know precisely <em>which</em> files have changed</p></li><li><p>Task action can perform the minimal amount of work</p></li></ul></div></section><section id="incremental-task-inputs-2"><h2>Incremental task inputs</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="java language-java">@TaskAction
+public void execute(IncrementalTaskInputs inputs) {
+   if (!inputs.isIncremental()) {
+      // clean build, for example
+      // ...
+   } else {
+      inputs.outOfDate(change -&gt;
+         if (change.isAdded()) {
+           ...
+         } else if (change.isRemoved()) {
+           ...
+         } else {
+            ...
+         }
+      });
+   }
+}</code></pre></div></div></section><section id="incrementality-gotchas"><h2>Incrementality gotchas</h2><div class="paragraph"><p>Adding a timestamp to a jar manifest will make the jar task always out of date.</p></div>
+<div class="paragraph"><p>What if you do want / need that? Maybe you could only do it for a release build.</p></div></section></section>
+<section><section id="advanced-configuration"><h2>Advanced configuration</h2></section><section id="declarative-vs-imperative"><h2>Declarative vs. Imperative</h2><div class="paragraph"><p>The ability to have code inside Gradle build scripts is a powerful feature.</p></div>
+<div class="paragraph"><p>While it adds flexibility, abusing the feature leads to builds that are hard to understand.</p></div></section><section id="gradle-extensibility"><h2>Gradle extensibility</h2><div class="ulist"><ul><li><p>Define properties</p></li><li><p>Add <em>extensions</em> to existing objects</p></li></ul></div>
+<div class="paragraph"><p>Allows built in domain objects to be extended, including <code>Project</code>.</p></div>
+<div class="paragraph"><p>Makes the <em>build language</em> extensible.</p></div></section><section id="gradle-properties"><h2>Gradle properties</h2><div class="ulist"><ul><li class="fragment"><p>Different levels</p></li><li class="fragment"><p>Matching different use cases</p></li></ul></div></section><section id="code-gradle-properties-code-and-command-line"><h2><code>gradle.properties</code> and command line</h2><div class="ulist"><ul><li><p>Define items that have a sensible default</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">org.gradle.parallel = true
+deployUrl = https://example.com/default</code></pre></div></div>
+<div class="paragraph"><p>Can be overridden on the command line:</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew -Dorg.gradle.parallel=false -PdeployUrl='https://example.com/custom'</code></pre></div></div></section><section id="project-properties"><h2>Project properties</h2><div class="ulist"><ul><li><p>Added to the <code>ext</code> container</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">def getRevision = {
+    def cmd = 'git rev-parse HEAD'
+    try {
+        def proc = cmd.execute()
+        return proc.text.trim()
+    } catch (IOException) {
+        return 'Unknown'
+    }
+}
+
+ext.revision = getRevision()</code></pre></div></div></section><section id="extensions"><h2>Extensions</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">class MyExtension {
+    String someProperty
+}
+
+extensions.create("myDSL", MyExtension)
+
+myDSL {
+    someProperty = "someValue"
+}</code></pre></div></div></section><section id="configuration-rules"><h2>Configuration rules</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">configurations.all {
+    println "Configuration $it.name"
+}
+tasks.withType(Jar) {
+    destinationDir = "somePath"
+    doLast { /* do something */ }
+}
+
+plugins.withType(IdeaPlugin) {
+    // Perform actions if plugin gets applied
+}</code></pre></div></div></section><section id="implicit-task-relationships"><h2>Implicit task relationships</h2><div class="paragraph"><p>Tasks can have implicit dependencies:</p></div>
+<div class="ulist"><ul><li><p><code>taskA.inputs = taskB.outputs</code></p><div class="ulist"><ul><li><p><code>jar</code> task consumes <code>compileJava</code> output</p></li></ul></div></li></ul></div>
+<div class="paragraph"><p>This is known by Gradle through task implementations.</p></div>
+<div class="paragraph"><p>The heart of the Gradle execution model.</p></div></section><section id="explicit-task-relationships"><h2>Explicit task relationships</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">task generateCode
+task compileJava
+
+compileJava.dependsOn generateCode</code></pre></div></div>
+<div class="paragraph"><p>Aim for having implicit dependencies, based on proper modelling, instead of having to resort to explicit wiring.</p></div></section><section id="demo-3-2-2" data-state="demo"><div class="paragraph"><p>Demo</p></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Try to replace compile.dependsOn generated with file collection and then fully implicit</p></li></ul></div></aside></section><section id="sourceset-output"><h2>SourceSet output</h2><div class="paragraph"><p>Source sets have an <code>output</code> property. It references:</p></div>
+<div class="ulist"><ul><li><p>Class files</p></li><li><p>Processed resources</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">task jar {
+  from sourceSets.main.output
+}</code></pre></div></div></section><section id="script-plugins"><h2>Script plugins</h2><div class="listingblock"><div class="title">plugin.gradle</div><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">task taskFromPlugin() {
+    doLast { println "added by a script plugin!" }
+}</code></pre></div></div>
+<div class="listingblock"><div class="title">master.gradle</div><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">apply from: "plugin.gradle"</code></pre></div></div>
+<div class="paragraph"><p>Note: the script reference can be a URL</p></div></section><section id="binary-plugins"><h2>Binary plugins</h2><div class="ulist"><ul><li><p>Implementation of the <code>Plugin</code> interface</p></li><li><p>Can be bundled in <code>buildSrc</code></p></li><li><p>Can extend the Gradle model</p><div class="ulist"><ul><li><p>New task types, extensions, &#8230;&#8203;</p></li></ul></div></li></ul></div></section><section id="build-code-management"><h2>Build code management</h2><div class="ulist"><ul><li><p>Use script plugins to decompose build scripts</p><div class="ulist"><ul><li><p>Enhances comprehension and allows for reuse</p></li><li><p>Modularize according to domain (integ tests) or role (user/build admin)</p></li></ul></div></li><li><p>Encapsulate the imperative into plugins and custom tasks</p></li><li><p>Enhance the API of the Gradle domain objects</p></li><li><p>Add your own declarative elements</p></li></ul></div></section></section>
+<section><section id="dependency-management"><h2>Dependency management</h2></section><section id="dependency-management-engine"><h2>Dependency management engine</h2><div class="ulist"><ul><li><p>Gradle has its own engine</p></li><li><p>Supports Ivy, Maven and more</p></li><li><p>Aims at consistency</p></li><li><p>Doesn&#8217;t use <code>.m2</code> by default</p></li><li><p>Local cache knows where a dependency comes from</p></li></ul></div></section><section id="declaring-repositories"><h2>Declaring repositories</h2><div class="paragraph"><p>Basics</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">repositories {
+   mavenCentral()
+   jcenter()
+   google()
+}</code></pre></div></div></section><section id="declaring-repositories-2"><h2>Declaring repositories</h2><div class="paragraph"><p>Uncommon</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">repositories {
+   maven {
+      url "https://my-repo/
+   }
+
+   ivy {
+      url "https://my-repo/
+   }
+
+   flatDir name: 'libs', dirs: "$projectDir/libs"
+}</code></pre></div></div></section><section id="maven-local"><h2>Maven local</h2><div class="ulist"><ul><li><p>Should almost never use it</p></li><li><p>Mainly for Gradle/Maven interoperability</p></li></ul></div></section><section id="dependency-notations"><h2>Dependency notations</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">dependencies {
+   api project(':core')
+   implementation "com.google.code.gson:gson:2.8.2"
+   implementation("org.ow2.asm:asm") {
+      version { prefer "6.1.1" }
+      because "Only version compatible with JDK 11"
+   }
+
+   testImplementation group:"junit", name:"junit", version:"4.12"
+}</code></pre></div></div></section><section id="dependency-versions"><h2>Dependency versions</h2><div class="ulist"><ul><li><p><code>1.0</code>: fixed, cached forever</p></li><li><p><code>[1.0, )</code>: dynamic, cached for 24h</p></li><li><p><code>1.0-SNAPSHOT</code>: changing, cached for 24h</p></li><li><p>Use <code>--refresh-dependencies</code> to force update</p></li></ul></div></section><section id="danger-zone"><h2>Danger zone</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">dependencies {
+   api('dont.do.this.at:home:1.0') {
+      changing = true
+   }
+}</code></pre></div></div></section><section id="resolution-strategy"><h2>Resolution strategy</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">configurations.all {
+    resolutionStrategy {
+        failOnVersionConflict()
+        cacheDynamicVersionsFor(5, HOURS)
+    }
+}</code></pre></div></div></section><section id="fixing-dependency-management-issues"><h2>Fixing dependency management issues</h2><div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">configurations {
+   compileClasspath.resolutionStrategy {
+      eachDependency { DependencyResolveDetails details -&gt;
+         // specifying a fixed version for all
+         // libraries with 'org.gradle' group
+         if (details.requested.group == 'org.gradle') {
+            details.useVersion '1.4'
+         }
+      }
+   }
+}</code></pre></div></div></section><section id="making-sense-of-the-mess"><h2>Making sense of the mess</h2><div class="paragraph"><p>Talk Jeudi 19, 14:55 - 15:40, Maillot</p></div>
+<div class="paragraph"><p><a href="https://cfp.devoxx.fr/2018/talk/EAF-9391/En_finir_avec_les_problemes_de_gestion_de_dependances">En finir avec les problèmes de gestion de dépendances</a></p></div></section></section>
+<section><section id="ide-integration"><h2>IDE integration</h2></section><section id="plugins"><h2>Plugins</h2><div class="ulist"><ul><li class="fragment"><p>Dedicated IDE plugins</p><div class="ulist"><ul><li><p>For IntelliJ: <code>idea</code></p></li><li><p>For Eclipse: <code>eclipse</code></p></li></ul></div></li><li class="fragment"><p>Generation of IDE configuration files for project integration</p></li><li class="fragment"><p>Native IDE integration available as well</p></li></ul></div></section><section id="intellij-idea"><h2>IntelliJ Idea</h2><div class="ulist"><ul><li class="fragment"><p>Recommended: use Idea native integration</p></li><li class="fragment"><p>Imports Gradle projects</p></li><li class="fragment"><p>Enables compilation and tests execution</p></li><li class="fragment"><p>Changes to the Gradle build need to be imported again</p><div class="ulist"><ul><li><p>Unless auto-import is enabled</p></li></ul></div></li></ul></div></section><section id="advanced-idea-integration"><h2>Advanced Idea integration</h2><div class="ulist"><ul><li><p>The Gradle view enables invocation of project tasks.</p></li><li><p>The IDE can even delegate all compilation and executions to Gradle</p></li></ul></div>
+<div class="imageblock" style=""><img src="./images/idea.png" alt="idea" width="1280" height="720" /></div></section><section id="customizing-idea-integration"><h2>Customizing Idea integration</h2><div class="ulist"><ul><li class="fragment"><p><code>idea</code> plugin enables modifying the generated IDE configuration</p></li><li class="fragment"><p>Needed for project with very specific setups</p></li><li class="fragment"><p>Example: configure default run / debug configurations with extra properties</p></li></ul></div></section><section id="eclipse"><h2>Eclipse</h2><div class="ulist"><ul><li class="fragment"><p>Use the <code>Buildship</code> IDE plugin</p></li><li class="fragment"><p>Imports Gradle projects</p></li><li class="fragment"><p>Enables compilation and tests execution</p></li><li class="fragment"><p>Changes to the Gradle build need to be imported again</p></li></ul></div></section><section id="advanced-eclipse-integration"><h2>Advanced Eclipse integration</h2><div class="ulist"><ul><li><p>Custom Gradle views enable invoking build tasks</p></li></ul></div>
+<div class="imageblock" style=""><img src="./images/eclipse.png" alt="eclipse" width="1280" height="720" /></div></section></section>
+<section><section id="gradle-build-cache"><h2>Gradle build cache</h2></section><section id="cached-tasks"><h2>Cached tasks</h2><div class="paragraph"><p>It is the cross build level expression of Gradle efficiency.</p></div>
+<div class="paragraph"><p>Based on tasks inputs, Gradle can fetch the outputs from cache instead of having to run the task.</p></div></section><section id="usage-scenarios"><h2>Usage scenarios</h2><div class="ulist"><ul><li><p>Local cache for faster <code>git bisect</code></p></li><li><p>CI populated cache for faster <em>morning builds</em> of developers</p></li><li><p>Faster CI feedback by reusing common elements</p><div class="ulist"><ul><li><p>Pull request jobs usually vary from master only in a few modules</p></li></ul></div></li></ul></div></section><section id="pre-requisites"><h2>Pre-requisites</h2><div class="ulist"><ul><li><p>Gradle up-to-date checks are working</p><div class="ulist"><ul><li><p>Two subsequent invocations of the same build result in all tasks up-to-date</p></li></ul></div></li><li><p>Tasks are declared <em>cacheable</em></p><div class="ulist"><ul><li><p>This is an opt-in support</p></li></ul></div></li></ul></div></section><section id="cacheable-tasks"><h2>Cacheable tasks</h2><div class="paragraph"><p>The benefit of getting the result from the cache only matters if the operation is expensive.</p></div>
+<div class="paragraph"><p>By default in Gradle compilation tasks can be cached, but not copy tasks for example.</p></div></section><section id="inputs-outputs-specifics"><h2>Inputs / Outputs specifics</h2><div class="paragraph"><p>While the system is similar to up-to-date checks, a few things need to be considered in addition:</p></div>
+<div class="ulist"><ul><li><p>Relative vs. absolute paths</p><div class="ulist"><ul><li><p>Since the goal of caching is across builds, absolute paths will differ</p></li></ul></div></li></ul></div></section><section id="enabling-caching"><h2>Enabling caching</h2><div class="ulist"><ul><li><p>Add <code>--build-cache</code> to your command line</p></li><li><p>Configure <code>org.gradle.caching=true</code> in <code>gradle.properties</code></p></li></ul></div></section><section id="configuring-local-caching"><h2>Configuring local caching</h2><div class="paragraph"><p>By default, a directory cache in the Gradle user home dir is used.</p></div>
+<div class="listingblock"><div class="title">settings.gradle</div><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">buildCache {
+    local(DirectoryBuildCache) {
+        directory = new File(rootDir, 'build-cache')
+        removeUnusedEntriesAfterDays = 30
+    }
+}</code></pre></div></div></section><section id="configuring-remote-caching"><h2>Configuring remote caching</h2><div class="listingblock"><div class="title">settings.gradle</div><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">buildCache {
+    remote(HttpBuildCache) {
+        url = 'https://example.com:8123/cache/'
+    }
+}</code></pre></div></div></section><section id="demo-8-1" data-state="demo"><div class="paragraph"><p>Demo</p></div></section></section>
+<section><section id="conclusion"><h2>Conclusion</h2></section><section id="gradle-enterprise"><h2>Gradle Enterprise</h2><div class="ulist"><ul><li><p>On premise build cache and build scan solution</p></li><li><p>Out of the box solution for distributed build cache</p></li><li><p>Improved build scan feature set</p><div class="ulist"><ul><li><p>Searchable build history</p></li><li><p>Build comparison</p></li></ul></div></li></ul></div></section><section id="gradle--devoxx-fr"><h2>Gradle à Devoxx FR</h2><div class="ulist"><ul><li><p><a href="https://cfp.devoxx.fr/2018/talk/EAF-9391/En_finir_avec_les_problemes_de_gestion_de_dependances">En finir avec les problèmes de gestion de dépendances</a></p><div class="ulist"><ul><li><p>Jeudi, 14:55 - 15:40 Maillot</p></li></ul></div></li><li><p><a href="https://cfp.devoxx.fr/2018/talk/FOU-3733/BOF_Gradle">BOF Gradle</a></p><div class="ulist"><ul><li><p>Jeudi, 20:40 - 21:30 Paris 221M-222M Lab</p></li></ul></div></li></ul></div></section></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Set a per-slide timing for speaker notes, null means none
+  defaultTiming: null,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: true,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 'gradle',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'linear',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+  ]
+});</script><!-- this currently shows up at the wrong location in the final index.html which means the style font is not properly applied-->
+
+<div class="footer" style="color:white">
+    <p>#DevoxxFR #gradle @CedricChampeau @ljacomet</p><img align="right" src="./images/logo-texte-devoxx-france-400.png" />
+</div></body></html>
