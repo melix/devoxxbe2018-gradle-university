@@ -1,0 +1,123 @@
+== Up to date and incremental tasks
+
+=== Why does it matter?
+
+* Gradle is meant for incremental builds
+* `clean` is a waste of time
+* Time is $$$
+
+=== The incrementality test
+
+[%step]
+* Run a build
+* Run again with no change
+* If a task was re-executed, you got it wrong
+
+=== Incremental build
+
+A task is UP-TO-DATE iff:
+
+* Inputs have not changed
+* Outputs are still present and un-tampered
+
+=== Change detection
+
+* Hash of input / output files
+* Hash of contents of input / output folders
+* Serialize input properties
+
+=== Control change detection
+
+* `--rerun-tasks` bypasses up-to-date checks
+* Running at _info_ level will give you insights in up-to-date calculations
+
+=== Example: building a shaded jar
+
+[source,groovy]
+----
+task shadedJar(type: ShadedJar) {
+   jarFile = file("$buildDir/libs/shaded.jar")
+   classpath = configurations.runtime
+   mapping = ['org.apache': 'shaded.org.apache']
+}
+----
+
+* What are the task inputs?
+* What are the task outputs?
+* What if one of them changes?
+
+=== Declaring inputs
+
+[source,java]
+----
+public class ShadedJar extends DefaultTask {
+   ...
+   @InputFiles
+   FileCollection getClasspath() { ... }
+
+   @Input
+   Map<String, String> getMapping() { ... }
+}
+----
+
+=== Declaring outputs
+
+[source,java]
+----
+public class ShadedJar extends DefaultTask {
+   ...
+
+   @OutputFile
+   File getJarFile() { ... }
+}
+----
+
+=== Annotation sensitivity
+
+- `@InputFiles`: File path or contents
+- `@Classpath`: File contents only, order sensitive
+- `@CompileClasspath`: **Class** file contents, limited to ABI
+- `@Input`: Value change
+
+=== Know why your task is out-of-date
+
+[%notitle]
+[state=demo]
+=== Demo 4.1
+
+Demo
+
+=== Incremental task inputs
+
+* Know precisely _which_ files have changed
+* Task action can perform the minimal amount of work
+
+=== Incremental task inputs
+
+[source,java]
+----
+@TaskAction
+public void execute(IncrementalTaskInputs inputs) {
+   if (!inputs.isIncremental()) {
+      // clean build, for example
+      // ...
+   } else {
+      inputs.outOfDate(change ->
+         if (change.isAdded()) {
+           ...
+         } else if (change.isRemoved()) {
+           ...
+         } else {
+            ...
+         }
+      });
+   }
+}
+----        
+
+=== Incrementality gotchas
+
+Adding a timestamp to a jar manifest will make the jar task always out of date.
+
+What if you do want / need that? Maybe you could only do it for a release build.
+

@@ -1,0 +1,57 @@
+== Anatomy of a Gradle project
+
+Gradle is based on a set of conventions.
+
+Some inherited from the history of Java build systems:
+
+* `src/main/java`
+* `src/test/resources`
+
+Others brought by Gradle:
+
+* The name of the project is the name of the containing folder
+
+=== A simple project
+
+image::simpleProject.png[]
+
+=== A multi project build
+
+image::multiProject.png[]
+
+[%notitle]
+[state=demo]
+=== Demo 1.1
+
+Demo
+
+[NOTE.speaker]
+--
+* Browse build files
+* Show specific project build files
+* Show buildSrc dir
+--
+
+=== The build file
+
+* By default, named `build.gradle` which can be configured.
+* Describes what the build is about through configuration.
+
+=== Companion files
+
+* `settings.gradle`: Configure the project(s) that compose the build
+* `gradle.properties`: Defines properties specific to the build, which can be overridden
+
+=== Additional build artifacts
+
+Directories:
+
+* `buildSrc`
+* `.gradle`
+* `build`
+
+=== The Gradle Wrapper
+
+[%step]
+* Bootstraps Gradle for project contributors
+* Project controls Gradle version

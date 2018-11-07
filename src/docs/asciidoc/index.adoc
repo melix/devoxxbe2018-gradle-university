@@ -1,0 +1,164 @@
+:revnumber: {project-version}
+:example-caption!:
+ifndef::imagesdir[:imagesdir: images]
+ifndef::sourcedir[:sourcedir: ../java]
+:navigation:
+:menu:
+:status:
+:title-slide-background-image: title.jpeg
+:title-slide-transition: zoom
+:title-slide-transition-speed: fast
+:icons: font
+
+= : Je passe à Gradle Maturité, performance et plaisir!
+
+Cédric Champeau (@CedricChampeau) & Louis Jacomet (@ljacomet), Gradle Inc.
+
+== Who are we?
+
+[%notitle]
+=== Cedric
+[source,groovy]
+----
+speaker {
+    name 'Cédric Champeau'
+    company 'Gradle Inc'
+    oss 'Apache Groovy committer',
+    successes 'Static type checker',
+              'Static compilation',
+              'Traits',
+              'Markup template engine',
+              'DSLs'
+        failures Stream.of(bugs),
+        twitter '@CedricChampeau',
+        github 'melix',
+        extraDescription '''Groovy in Action 2 co-author
+Misc OSS contribs'''
+}
+----
+
+[%notitle]
+=== Louis
+[source,groovy]
+----
+speaker {
+    name 'Louis Jacomet'
+    company 'Gradle Inc'
+    past 'Terracotta / Ehcache',
+              'Freelance consultant',
+        failures Stream.of(bugs),
+        twitter '@ljacomet',
+        github 'ljacomet',
+        extraDescription '''Not fully figured out
+how to stay out of management?!?'''
+}
+----
+
+== What is Gradle?
+
+=== Gradle's purpose
+
+Gradle is a build and automation tool.
+
+[%step]
+* JVM based
+* Implemented in Java
+* 100% Free Open Source - Apache Standard License 2.0
+
+=== Agnostic Build System
+
+* Java ecosystem
+** Groovy, Kotlin, Scala, ...
+* Native ecosystem
+** C, C++, Swift, ...
+* Android
+* Misc
+** Go, Asciidoctor, ...
+
+=== Gradle in figures
+
+[%step]
+* 5.0M downloads / month
+* https://techcrunch.com/2017/04/07/tracking-the-explosive-growth-of-open-source-software/[#17 OSS projects worldwide]
+* 35 Gradle Engineers
+* 300K builds/week @LinkedIn
+
+=== Gradle Inc.
+
+The company behind Gradle.
+
+* Build Happiness
+* Employs full time engineers
+* Providing Gradle Build Scans and Gradle Enterprise
+* Gradle consulting, support, development services etc.
+* Training: online, public and in-house
+
+== Objectives
+
+=== Objectives
+
+Get you started with Gradle
+
+[%step]
+* As a user needing to interact with a Gradle project
+* As a build author starting to use Gradle for your projects
+
+== Agenda
+
+* Anatomy of a Gradle project
+* Use Gradle
+* Concepts and plugins
+* Incremental build and tasks
+* Advanced configuration
+* Dependency Management
+* IDE integration
+* Caching
+
+== Gradle survival guide
+
+image::survival.jpeg[canvas,size=contain]
+
+*
+
+include::chapters/1_anatomy.adoc[]
+
+include::chapters/0_scans.adoc[]
+
+include::chapters/2_use.adoc[]
+
+== Gradle construction guide
+
+[.stretch]
+image::construction.png[]
+
+include::chapters/3_concepts.adoc[]
+
+include::chapters/3_plugins.adoc[]
+
+include::chapters/4_incremental.adoc[]
+
+include::chapters/5_config.adoc[]
+
+include::chapters/6_dependencies.adoc[]
+
+include::chapters/7_ide.adoc[]
+
+include::chapters/8_caching.adoc[]
+
+== Conclusion
+
+=== Gradle Enterprise
+
+* On premise build cache and build scan solution
+* Out of the box solution for distributed build cache
+* Improved build scan feature set
+** Searchable build history
+** Build comparison
+
+=== Gradle à Devoxx FR
+
+* https://cfp.devoxx.fr/2018/talk/EAF-9391/En_finir_avec_les_problemes_de_gestion_de_dependances[En finir avec les problèmes de gestion de dépendances]
+**  Jeudi, 14:55 - 15:40 Maillot
+* https://cfp.devoxx.fr/2018/talk/FOU-3733/BOF_Gradle[BOF Gradle]
+**  Jeudi, 20:40 - 21:30 Paris 221M-222M Lab
+

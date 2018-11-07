@@ -1,0 +1,146 @@
+== Concepts
+
+=== Gradle lifecycle
+
+Configuration phase
+
+[%step]
+* Discovering projects
+* Build scripts evaluation
+* Model construction
+* Task graph construction
+
+=== Gradle lifecycle (2)
+
+Execution phase
+
+[%step]
+* Run tasks that are required by the build invocation
+
+[%notitle]
+[state=demo]
+=== Demo 3.1
+
+Demo
+
+[NOTE.speaker]
+--
+* Create a simple build.gradle
+* Add two inline tasks that doing a println
+* Execute one task
+** Both println appear
+* Move println to doLast
+* Execute one task
+** Single println appear
+--
+
+=== Lifecycle best practices
+
+* Do the minimum during configuration
+** At this stage, Gradle walks all configuration items to determine which need to be part of the execution
+
+=== Concepts by example
+
+What are the building blocks of a _compile_ task for a Java project?
+
+=== Tasks
+
+It is the target of a build execution and does the work.
+
+=== Task actions
+
+[source, groovy]
+----
+include::{buildsdir}/hello.gradle[]
+----
+
+* `doLast` adding actions to a task
+
+=== Task type
+
+[source, groovy]
+----
+include::{buildsdir}/compile.gradle[]
+----
+
+* Provides declarative configuration
+* Task action is defined by the task type
+* Models what the build is about in terms of execution
+
+=== What does _compile_ do then?
+
+Transform Java source files into class files.
+
+=== Task inputs
+
+[%step]
+* Java source files
+* Source encoding
+* Compile options
+* Classpath
+
+=== Task outputs
+
+[%step]
+* Class files
+
+=== Importance of inputs / outputs
+
+You can think of a Gradle task as a function.
+
+Based on a set of inputs, you produce outputs.
+
+And ideally, the same set of inputs results in the same outputs.
+
+=== Inputs origin
+
+[%step]
+* Java source files
+** `SourceSet` concept
+* Source encoding & compile options
+** Task configuration
+* Classpath
+** From associated configuration
+
+=== Configurations
+
+A configuration is a container of dependencies and produced artifacts.
+
+A configuration can extend another one, inheriting its dependencies.
+
+=== Dependencies
+
+A dependency is a pointer to another piece of software required to build, test or run your project.
+
+When declaring a dependency, you tie it to a `Configuration`.
+
+=== In practice
+
+[source, groovy]
+----
+include::{buildsdir}/javaDependencies.gradle[]
+----
+
+=== Constructing the classpath
+
+[%step]
+* Resolve the configuration
+** Resolve the graph of dependencies
+** Retrieve or build the dependencies
+* Build the classpath
+
+=== Invocation chain
+
+[%step]
+* User requests `compileJava`
+* -> Build needs the compileClasspath
+* -> Build needs to resolve the `implementation` configuration
+
+=== Building the task graph
+
+Gradle will arrange tasks in an execution graph during the configuration phase:
+
+[%step]
+* Each task to be executed is a node
+* Implicit and explicit relationships define the edges between nodes
+* No cycles are allowed

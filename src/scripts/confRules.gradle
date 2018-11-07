@@ -1,0 +1,11 @@
+configurations.all {
+    println "Configuration $it.name"
+}
+tasks.withType(Jar) {
+    destinationDir = "somePath"
+    doLast { /* do something */ }
+}
+
+plugins.withType(IdeaPlugin) {
+    // Perform actions if plugin gets applied
+}
