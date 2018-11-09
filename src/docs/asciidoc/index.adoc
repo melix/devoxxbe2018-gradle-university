@@ -83,6 +83,8 @@ Gradle is a build and automation tool.
 * 35 Gradle Engineers
 * 300K builds/week @LinkedIn
 
+include::chapters/about-gradle.adoc[]
+
 === Gradle Inc.
 
 The company behind Gradle.
@@ -116,9 +118,7 @@ Get you started with Gradle
 
 == Gradle survival guide
 
-image::survival.jpeg[canvas,size=contain]
-
-*
+image::survival.jpeg[background, size=cover]
 
 include::chapters/1_anatomy.adoc[]
 
@@ -131,17 +131,15 @@ include::chapters/2_use.adoc[]
 [.stretch]
 image::construction.png[]
 
+include::chapters/3_plugins.adoc[]
+
 include::chapters/3_concepts.adoc[]
 
-include::chapters/3_plugins.adoc[]
+include::chapters/6_dependencies.adoc[]
 
 include::chapters/4_incremental.adoc[]
 
 include::chapters/5_config.adoc[]
-
-include::chapters/6_dependencies.adoc[]
-
-include::chapters/7_ide.adoc[]
 
 include::chapters/8_caching.adoc[]
 
@@ -155,10 +153,8 @@ include::chapters/8_caching.adoc[]
 ** Searchable build history
 ** Build comparison
 
-=== Gradle à Devoxx FR
+=== Sessions at Devoxx BE
 
-* https://cfp.devoxx.fr/2018/talk/EAF-9391/En_finir_avec_les_problemes_de_gestion_de_dependances[En finir avec les problèmes de gestion de dépendances]
-**  Jeudi, 14:55 - 15:40 Maillot
-* https://cfp.devoxx.fr/2018/talk/FOU-3733/BOF_Gradle[BOF Gradle]
-**  Jeudi, 20:40 - 21:30 Paris 221M-222M Lab
+* https://dvbe18.confinabox.com/talk/VFH-6802/Improving_Android_Build_Performance[Improving Android Build performance]
+**  Thursday, 16:30 - 17:15 Room 3
 

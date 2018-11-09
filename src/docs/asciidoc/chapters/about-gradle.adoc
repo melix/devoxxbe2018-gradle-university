@@ -1,0 +1,22 @@
+=== Gradle Inc.
+
+The company behind Gradle.
+
+[%step]
+* Build Happiness
+* Employs full time engineers
+* Providing Gradle Build Scans and Gradle Enterprise
+* (Gradle consulting, support, development services etc.)
+* (Training: online, public and in-house)
+
+=== Gradle is hiring!
+
+* Fully distributed development team
+* Exciting project used by millions
+* Build tool team and Gradle enterprise positions
+
+If anything you hear from now on sounds like a great problem to solve,
+
+Talk to us!
+
+https://gradle.com/careers/
