@@ -152,7 +152,8 @@ Gradle can run tasks of decoupled projects in parallel
 [state=demo]
 === Demo 2.1
 
-Demo
+Demo: using Gradle from CLI
+(demo-statistics)
 
 [NOTE.speaker]
 --

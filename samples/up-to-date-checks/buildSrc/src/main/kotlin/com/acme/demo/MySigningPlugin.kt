@@ -7,7 +7,7 @@ open class MySigningPlugin: Plugin<Project> {
     override
     fun apply(project: Project) {
         project.pluginManager.apply("base")
-        project.tasks.create("sign", MySign::class.java) {
+        project.tasks.register("sign", MySign::class.java) {
             group = "Signing"
         }
     }

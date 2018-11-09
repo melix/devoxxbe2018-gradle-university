@@ -5,7 +5,7 @@
 * It is a permanent, centralized and shareable record of a build
 * It offers _tons_ of insights into how your software is building
 
-image::scan.png[link=https://scans.gradle.com/s/hh4n2hv5sd6n2]
+image::scan.png[link=https://scans.gradle.com/s/r24tsebpxxoio]
 
 [NOTE.speaker]
 --

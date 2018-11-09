@@ -12,8 +12,8 @@ dependencies {
 }
 
 gradlePlugin {
-    (plugins) {
-        "my-signing-plugin" {
+    plugins {
+        register("my-signing-plugin") {
             id = "my-signing-plugin"
             implementationClass = "com.acme.demo.MySigningPlugin"
         }

@@ -23,7 +23,7 @@ image::multiProject.png[]
 [state=demo]
 === Demo 1.1
 
-Demo
+Demo: anatomy of a project
 
 [NOTE.speaker]
 --

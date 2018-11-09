@@ -85,7 +85,7 @@ public class ShadedJar extends DefaultTask {
 [state=demo]
 === Demo 4.1
 
-Demo
+Demo: up-to-date checking
 
 === Incremental task inputs
 

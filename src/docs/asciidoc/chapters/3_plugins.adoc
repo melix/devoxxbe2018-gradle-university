@@ -99,7 +99,7 @@ image::javaLibPluginConfigurations.png[width=1000, height=261]
 [state=demo]
 === Demo 3.2
 
-Demo
+Demo: adding a source set
 
 [NOTE.speaker]
 --

@@ -21,7 +21,7 @@ Execution phase
 [state=demo]
 === Demo 3.1
 
-Demo
+Demo: doLast
 
 [NOTE.speaker]
 --

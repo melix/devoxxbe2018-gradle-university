@@ -128,8 +128,7 @@ include::chapters/2_use.adoc[]
 
 == Gradle construction guide
 
-[.stretch]
-image::construction.png[]
+image::construction.jpeg[background, size=cover]
 
 include::chapters/3_plugins.adoc[]
 
