@@ -109,9 +109,3 @@ configurations {
 }
 ----
 
-=== Making sense of the mess
-
-Talk Jeudi 19, 14:55 - 15:40, Maillot
-
-https://cfp.devoxx.fr/2018/talk/EAF-9391/En_finir_avec_les_problemes_de_gestion_de_dependances[En finir avec les problèmes de gestion de dépendances]
-
