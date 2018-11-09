@@ -65,7 +65,7 @@ NOTE: This will exclude the specific task _and_ all tasks it depended upon
 ./gradlew test --continue
 ----
 
-NOTE: The dependents task(s) of the failed one will still not be executed.
+NOTE: The dependent task(s) of the failed one will still not be executed.
 
 === Continuous build
 

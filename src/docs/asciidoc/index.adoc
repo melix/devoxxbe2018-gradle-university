@@ -120,27 +120,27 @@ Get you started with Gradle
 
 image::survival.jpeg[background, size=cover]
 
-include::chapters/1_anatomy.adoc[]
+include::chapters/anatomy.adoc[]
 
-include::chapters/0_scans.adoc[]
+include::chapters/scans.adoc[]
 
-include::chapters/2_use.adoc[]
+include::chapters/use.adoc[]
 
 == Gradle construction guide
 
 image::construction.jpeg[background, size=cover]
 
-include::chapters/3_plugins.adoc[]
+include::chapters/plugins.adoc[]
 
-include::chapters/3_concepts.adoc[]
+include::chapters/concepts.adoc[]
 
-include::chapters/6_dependencies.adoc[]
+include::chapters/dependencies.adoc[]
 
-include::chapters/4_incremental.adoc[]
+include::chapters/incremental.adoc[]
 
-include::chapters/5_config.adoc[]
+include::chapters/config.adoc[]
 
-include::chapters/8_caching.adoc[]
+include::chapters/caching.adoc[]
 
 == Conclusion
 
