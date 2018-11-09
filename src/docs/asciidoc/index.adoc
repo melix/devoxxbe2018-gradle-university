@@ -154,6 +154,12 @@ include::chapters/caching.adoc[]
 
 === Sessions at Devoxx BE
 
+* https://dvbe18.confinabox.com/talk/DBF-1594/project_versioning_like_a_git[Project versioning like a git]
+** Matthieu Brouillard
+** Wednesday, 13:30 - 13:45 Room 5
+
 * https://dvbe18.confinabox.com/talk/VFH-6802/Improving_Android_Build_Performance[Improving Android Build performance]
+** Cédric Champeau
 **  Thursday, 16:30 - 17:15 Room 3
+
 
