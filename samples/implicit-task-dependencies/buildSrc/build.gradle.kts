@@ -3,8 +3,8 @@ plugins {
 }
 
 gradlePlugin {
-   (plugins) {
-      "code-generator" {
+   plugins {
+      register("code-generator") {
          id = "code-generator"
          implementationClass = "com.acme.gradle.CodeGeneratorPlugin"
       }

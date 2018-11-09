@@ -84,7 +84,7 @@ Aim for having implicit dependencies, based on proper modelling, instead of havi
 [state=demo]
 === Demo 3.2
 
-Demo
+Demo: implicit task inputs
 
 [NOTE.speaker]
 --

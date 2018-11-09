@@ -1,12 +1,16 @@
-import com.acme.gradle.CodeGeneratorTask
-
 plugins {
     `java-library`
     id("code-generator")
 }
 
-val generateCode by tasks.getting(CodeGeneratorTask::class) {
-    conferences = setOf("Breizhcamp", "Devoxx")
+tasks {
+    generateCode {
+        conferences = setOf("Breizhcamp", "Devoxx")
+    }
+
+    compileJava {
+        dependsOn(generateCode)
+        source(generateCode.get().outputDirectory)
+    }
 }
 
-project.java.sourceSets["main"].java.srcDir(generateCode)
