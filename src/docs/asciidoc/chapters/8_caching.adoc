@@ -69,4 +69,4 @@ buildCache {
 [state=demo]
 === Demo 8.1
 
-Demo
+Demo: build cache
