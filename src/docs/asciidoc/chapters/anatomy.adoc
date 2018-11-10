@@ -11,14 +11,6 @@ Others brought by Gradle:
 
 * The name of the project is the name of the containing folder
 
-=== A simple project
-
-image::simpleProject.png[]
-
-=== A multi project build
-
-image::multiProject.png[]
-
 [%notitle]
 [state=demo]
 === Demo 1.1
@@ -31,6 +23,14 @@ Demo: anatomy of a project
 * Show specific project build files
 * Show buildSrc dir
 --
+
+=== A simple project
+
+image::simpleProject.png[]
+
+=== A multi project build
+
+image::multiProject.png[]
 
 === The build file
 
