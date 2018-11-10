@@ -62,13 +62,11 @@ include::chapters/about-gradle.adoc[]
 
 == Objectives
 
-=== Objectives
-
-Get you started with Gradle
+=== Get _YOU_ started with Gradle
 
 [%step]
-* As a user needing to interact with a Gradle project
-* As a build author starting to use Gradle for your projects
+* As a user needing to interact with Gradle projects
+* As a build author starting to use Gradle in your projects
 
 == Agenda
 
