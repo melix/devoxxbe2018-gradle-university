@@ -22,9 +22,9 @@ Gradle is a build and automation tool.
 === Gradle in figures
 
 [%step]
-* 5.0M downloads / month
+* 7.0M downloads / month
 * https://techcrunch.com/2017/04/07/tracking-the-explosive-growth-of-open-source-software/[#17 OSS projects worldwide]
-* 35 Gradle Engineers
+* 35+ Gradle Engineers
 * 300K builds/week @LinkedIn
 
 === Gradle Inc.
@@ -48,4 +48,5 @@ If anything you hear from now on sounds like a great problem to solve,
 
 Talk to us!
 
-https://gradle.com/careers/
+* https://gradle.com/careers/
+* or meet us at the booth!
