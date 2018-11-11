@@ -34,7 +34,8 @@ deployUrl = https://example.com/default
 Can be overridden on the command line:
 [source]
 ----
-./gradlew -Dorg.gradle.parallel=false -PdeployUrl='https://example.com/custom'
+$ ./gradlew -Dorg.gradle.parallel=false \
+> -PdeployUrl='https://example.com/custom'
 ----
 
 === Project properties
