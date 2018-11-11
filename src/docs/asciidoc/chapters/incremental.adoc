@@ -117,7 +117,9 @@ public void execute(IncrementalTaskInputs inputs) {
 
 === Incrementality gotchas
 
-Adding a timestamp to a jar manifest will make the jar task always out of date.
-
-What if you do want / need that? Maybe you could only do it for a release build.
+[%step]
+* Adding a timestamp to a jar manifest will make the jar task always out of date.
+* What if you do want / need that?
+[%step]
+** Maybe you could only do it for a release build.
 
