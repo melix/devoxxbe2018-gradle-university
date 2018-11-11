@@ -1,27 +1,22 @@
-/*
- * Copyright 2003-2012 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.sample;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
 public class SlowProjectTest {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(SlowProjectTest.class);
+
     @Test
-    public void createsProjectSlowly() throws Exception {
+    public void createProject() throws Exception {
+        LOGGER.info("Starting test");
         Thread.sleep(5000);
-        Project test = new Project("Test");
+        Project project = new Project("Test project");
+        assertThat(project.getName(), is("Test project"));
+        LOGGER.info("Finishing test");
     }
 }
