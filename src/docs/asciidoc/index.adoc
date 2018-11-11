@@ -76,7 +76,6 @@ include::chapters/about-gradle.adoc[]
 * Incremental build and tasks
 * Advanced configuration
 * Dependency Management
-* IDE integration
 * Caching
 
 == Gradle survival guide
