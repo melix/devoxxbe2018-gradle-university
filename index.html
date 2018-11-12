@@ -32,11 +32,11 @@ Misc OSS contribs'''
 how to stay out of management?!?'''
 }</code></pre></div></div></section></section>
 <section><section id="what-is-gradle"><h2>What is Gradle?</h2></section><section id="gradle-s-purpose"><h2>Gradle&#8217;s purpose</h2><div class="paragraph"><p>Gradle is a build and automation tool.</p></div>
-<div class="ulist"><ul><li class="fragment"><p>JVM based</p></li><li class="fragment"><p>Implemented in Java</p></li><li class="fragment"><p>100% Free Open Source - Apache Standard License 2.0</p></li></ul></div></section><section id="agnostic-build-system"><h2>Agnostic Build System</h2><div class="ulist"><ul><li><p>Java ecosystem</p><div class="ulist"><ul><li><p>Groovy, Kotlin, Scala, &#8230;&#8203;</p></li></ul></div></li><li><p>Native ecosystem</p><div class="ulist"><ul><li><p>C, C++, Swift, &#8230;&#8203;</p></li></ul></div></li><li><p>Android</p></li><li><p>Misc</p><div class="ulist"><ul><li><p>Go, Asciidoctor, &#8230;&#8203;</p></li></ul></div></li></ul></div></section><section id="gradle-in-figures"><h2>Gradle in figures</h2><div class="ulist"><ul><li class="fragment"><p>5.0M downloads / month</p></li><li class="fragment"><p><a href="https://techcrunch.com/2017/04/07/tracking-the-explosive-growth-of-open-source-software/">#17 OSS projects worldwide</a></p></li><li class="fragment"><p>35 Gradle Engineers</p></li><li class="fragment"><p>300K builds/week @LinkedIn</p></li></ul></div></section><section id="gradle-inc"><h2>Gradle Inc.</h2><div class="paragraph"><p>The company behind Gradle.</p></div>
+<div class="ulist"><ul><li class="fragment"><p>JVM based</p></li><li class="fragment"><p>Implemented in Java</p></li><li class="fragment"><p>100% Free Open Source - Apache Standard License 2.0</p></li></ul></div></section><section id="agnostic-build-system"><h2>Agnostic Build System</h2><div class="ulist"><ul><li><p>Java ecosystem</p><div class="ulist"><ul><li><p>Groovy, Kotlin, Scala, &#8230;&#8203;</p></li></ul></div></li><li><p>Native ecosystem</p><div class="ulist"><ul><li><p>C, C++, Swift, &#8230;&#8203;</p></li></ul></div></li><li><p>Android</p></li><li><p>Misc</p><div class="ulist"><ul><li><p>Go, Asciidoctor, &#8230;&#8203;</p></li></ul></div></li></ul></div></section><section id="gradle-in-figures"><h2>Gradle in figures</h2><div class="ulist"><ul><li class="fragment"><p>7.0M downloads / month</p></li><li class="fragment"><p><a href="https://techcrunch.com/2017/04/07/tracking-the-explosive-growth-of-open-source-software/">#17 OSS projects worldwide</a></p></li><li class="fragment"><p>35+ Gradle Engineers</p></li><li class="fragment"><p>300K builds/week @LinkedIn</p></li></ul></div></section><section id="gradle-inc"><h2>Gradle Inc.</h2><div class="paragraph"><p>The company behind Gradle.</p></div>
 <div class="ulist"><ul><li class="fragment"><p>Build Happiness</p></li><li class="fragment"><p>Employs full time engineers</p></li><li class="fragment"><p>Providing Gradle Build Scans and Gradle Enterprise</p></li><li class="fragment"><p>(Gradle consulting, support, development services etc.)</p></li><li class="fragment"><p>(Training: online, public and in-house)</p></li></ul></div></section><section id="gradle-is-hiring"><h2>Gradle is hiring!</h2><div class="ulist"><ul><li><p>Fully distributed development team</p></li><li><p>Exciting project used by millions</p></li><li><p>Build tool team and Gradle enterprise positions</p></li></ul></div>
 <div class="paragraph"><p>If anything you hear from now on sounds like a great problem to solve,</p></div>
 <div class="paragraph"><p>Talk to us!</p></div>
-<div class="paragraph"><p><a href="https://gradle.com/careers/" class="bare">https://gradle.com/careers/</a></p></div></section></section>
+<div class="ulist"><ul><li><p><a href="https://gradle.com/careers/" class="bare">https://gradle.com/careers/</a></p></li><li><p>or meet us at the booth!</p></li></ul></div></section></section>
 <section><section id="objectives"><h2>Objectives</h2></section><section id="get-em-you-em-started-with-gradle"><h2>Get <em>YOU</em> started with Gradle</h2><div class="ulist"><ul><li class="fragment"><p>As a user needing to interact with Gradle projects</p></li><li class="fragment"><p>As a build author starting to use Gradle in your projects</p></li></ul></div></section></section>
 <section id="agenda"><h2>Agenda</h2><div class="ulist"><ul><li><p>Anatomy of a Gradle project</p></li><li><p>Use Gradle</p></li><li><p>Concepts and plugins</p></li><li><p>Incremental build and tasks</p></li><li><p>Advanced configuration</p></li><li><p>Dependency Management</p></li><li><p>Caching</p></li></ul></div></section>
 <section id="gradle-survival-guide" data-background-image="./images/survival.jpeg" data-background-size="cover"><h2>Gradle survival guide</h2></section>
@@ -201,8 +201,7 @@ public void execute(IncrementalTaskInputs inputs) {
          }
       });
    }
-}</code></pre></div></div></section><section id="incrementality-gotchas"><h2>Incrementality gotchas</h2><div class="paragraph"><p>Adding a timestamp to a jar manifest will make the jar task always out of date.</p></div>
-<div class="paragraph"><p>What if you do want / need that? Maybe you could only do it for a release build.</p></div></section></section>
+}</code></pre></div></div></section><section id="incrementality-gotchas"><h2>Incrementality gotchas</h2><div class="ulist"><ul><li class="fragment"><p>Adding a timestamp to a jar manifest will make the jar task always out of date.</p></li><li class="fragment"><p>What if you do want / need that?</p><div class="ulist"><ul><li class="fragment"><p>Maybe you could only do it for a release build.</p></li></ul></div></li></ul></div></section></section>
 <section><section id="advanced-configuration"><h2>Advanced configuration</h2></section><section id="declarative-vs-imperative"><h2>Declarative vs. Imperative</h2><div class="paragraph"><p>The ability to have code inside Gradle build scripts is a powerful feature.</p></div>
 <div class="paragraph"><p>While it adds flexibility, abusing the feature leads to builds that are hard to understand.</p></div></section><section id="gradle-extensibility"><h2>Gradle extensibility</h2><div class="ulist"><ul><li><p>Define properties</p></li><li><p>Add <em>extensions</em> to existing objects</p></li></ul></div>
 <div class="paragraph"><p>Allows built in domain objects to be extended, including <code>Project</code>.</p></div>
@@ -210,7 +209,8 @@ public void execute(IncrementalTaskInputs inputs) {
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">org.gradle.parallel = true
 deployUrl = https://example.com/default</code></pre></div></div>
 <div class="paragraph"><p>Can be overridden on the command line:</p></div>
-<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">./gradlew -Dorg.gradle.parallel=false -PdeployUrl='https://example.com/custom'</code></pre></div></div></section><section id="project-properties"><h2>Project properties</h2><div class="ulist"><ul><li><p>Added to the <code>ext</code> container</p></li></ul></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="">$ ./gradlew -Dorg.gradle.parallel=false \
+&gt; -PdeployUrl='https://example.com/custom'</code></pre></div></div></section><section id="project-properties"><h2>Project properties</h2><div class="ulist"><ul><li><p>Added to the <code>ext</code> container</p></li></ul></div>
 <div class="listingblock"><div class="content"><pre class="highlight"><code data-noescape="" class="groovy language-groovy">def getRevision = {
     def cmd = 'git rev-parse HEAD'
     try {
@@ -363,6 +363,6 @@ Reveal.initialize({
   ]
 });</script><!-- this currently shows up at the wrong location in the final index.html which means the style font is not properly applied-->
 
-<div class="footer" style="color:white">
-    <p>#DevoxxFR #gradle @CedricChampeau @ljacomet</p><img align="right" src="./images/logo-texte-devoxx-france-400.png" />
+<div class="footer">
+    <p>#DevoxxBe #gradle @CedricChampeau @ljacomet</p><img align="right" src="./images/logo-texte-devoxx.png" />
 </div></body></html>
